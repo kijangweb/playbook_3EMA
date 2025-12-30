@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3EMA Strict + ATH — Final Integrated Playbook</title>
+<style>
+:root{
+  --bg:#05070b; --card:#0c1018; --line:#1a2030;
+  --green:#7CFF6B; --red:#FF6B6B; --gold:#FFD36B;
+  --neon:#7cffd1; --text:#eaeaea; --muted:#8b95a7;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh;
+  background:radial-gradient(circle at top,#0e1424,#05070b 75%);
+  font-family:system-ui,-apple-system,sans-serif; color:var(--text);
+  display:flex; justify-content:center;
+}
+.app{ width:100%; max-width:420px; padding:25px 15px 60px; }
+.header{text-align:center;margin-bottom:25px}
+.logo{
+  font-size:24px; font-weight:900;
+  background:linear-gradient(90deg,#7cffd1,#6bc7ff,#ffd36b);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  text-shadow:0 0 20px rgba(124,255,209,0.3);
+}
+.toggle{ display:flex; justify-content:center; gap:10px; margin-top:15px; }
+.toggle button{
+  background:#12182a; border:1px solid var(--line); color:var(--muted);
+  padding:6px 18px; border-radius:999px; font-size:12px; font-weight:800; cursor:pointer;
+}
+.toggle button.active{ background:linear-gradient(90deg,#6bc7ff,#7cffd1); color:#000; box-shadow: 0 0 15px rgba(124,255,209,0.4);}
+
+.card{
+  background: var(--card); border:1px solid var(--line);
+  border-radius:20px; padding:20px; margin-bottom:18px;
+}
+.card h2{margin:0 0 15px; font-size:15px; display:flex; align-items:center; gap:8px; color:var(--neon);}
+.list{list-style:none;padding:0;margin:0}
+.list li{
+  display:flex; align-items:start; gap:12px; padding:10px 0;
+  border-bottom:1px dashed rgba(255,255,255,0.05); font-size:13px;
+}
+.dot{ width:10px; height:10px; border-radius:50%; margin-top:4px; flex-shrink:0;}
+.ok{background: var(--green); box-shadow:0 0 15px var(--green);}
+.bad{background: var(--red); box-shadow:0 0 15px var(--red);}
+
+.table-wrap{ overflow:hidden; border-radius:12px; border:1px solid #1f2636; margin-top:10px;}
+.table{ width:100%; border-collapse:collapse; font-size:12px; background: rgba(0,0,0,0.3);}
+.table th, .table td{ padding:12px; border:1px solid #1f2636; text-align: left;}
+.table th{ background: rgba(124, 255, 209, 0.1); color: var(--neon); width:40%; }
+
+.exec-btn{
+  width:100%; padding:18px; border-radius:18px; font-size:13px; font-weight:900;
+  text-align:center; text-transform: uppercase; margin-top:10px;
+}
+.exec-buy{ background: linear-gradient(180deg,#9aff8a,#4bff6b); color:#07110a; box-shadow: 0 0 25px rgba(124, 255, 107, 0.4);}
+.exec-sell{ background: linear-gradient(180deg,#ff9a9a,#ff6b6b); color:#160b0b; box-shadow: 0 0 25px rgba(255, 107, 107, 0.4);}
+.exec-wait{ background: var(--gold); color:#1a1405; box-shadow: 0 0 20px rgba(255, 211, 107, 0.3);}
+
+.cta-btn{
+  display:block; text-align:center; padding:18px; border-radius:18px;
+  font-weight:900; text-decoration:none; color:#0a120c;
+  background:linear-gradient(90deg,#7cffd1,#6bc7ff);
+  box-shadow:0 0 30px rgba(124,255,209,0.5); animation: pulse 2s infinite ease-in-out;
+}
+@keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.02);} }
+
+.footer{ text-align:center; font-size:11px; color:var(--muted); margin-top:40px; }
+.wa-float{
+  position:fixed; bottom:20px; right:20px; padding:15px 20px;
+  border-radius:999px; font-size:12px; font-weight:900;
+  text-decoration:none; color:#0b120c; background:#25D366;
+  box-shadow:0 0 20px rgba(37,211,102,0.6); z-index:999;
+}
+details summary { cursor: pointer; color: var(--neon); font-weight: 800; padding: 10px 0; outline: none; }
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="header">
+  <div class="logo">3EMA STRICT + PANEL</div>
+  <div class="toggle">
+    <button id="btn-id" onclick="setLang('id')" class="active">ID</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<div class="card" style="border-left: 4px solid var(--neon);">
+  <h2 id="core-title"></h2>
+  <p id="core-desc" style="color:var(--muted); font-size:13px; line-height:1.6;"></p>
+</div>
+
+<div class="card">
+  <h2 id="check-title"></h2>
+  <details open>
+    <summary id="sum-mech"></summary>
+    <div class="table-wrap"><table class="table" id="t-mech"></table></div>
+  </details>
+</div>
+
+<div class="card">
+  <h2 id="play-title"></h2>
+  <details open>
+    <summary id="sum-play-a"></summary>
+    <ul class="list" id="list-play-a"></ul>
+  </details>
+  <details>
+    <summary id="sum-play-b"></summary>
+    <ul class="list" id="list-play-b"></ul>
+  </details>
+</div>
+
+<div class="card" style="border-left: 4px solid var(--gold);">
+  <h2 id="lot-title"></h2>
+  <div class="table-wrap"><table class="table" id="t-lot"></table></div>
+</div>
+
+<div class="card" style="border-top: 3px solid var(--green);">
+  <h2 id="buy-title"></h2>
+  <ul class="list" id="buy-list"></ul>
+  <div class="exec-btn exec-buy" id="btn-buy-text"></div>
+</div>
+
+<div class="card" style="border-top: 3px solid var(--red);">
+  <h2 id="sell-title"></h2>
+  <ul class="list" id="sell-list"></ul>
+  <div class="exec-btn exec-sell" id="btn-sell-text"></div>
+</div>
+
+<div class="card" style="text-align:center;">
+  <h2 id="final-title"></h2>
+  <p id="final-desc" style="font-size:12px; color:var(--muted); margin-bottom:10px;"></p>
+  <div class="exec-btn exec-wait" id="btn-wait-text"></div>
+</div>
+
+<div class="card" style="border:1px solid rgba(124,255,209,0.3); background: var(--card);">
+  <h2 id="conf-title" style="justify-content:center;"></h2>
+  <p id="conf-desc" style="font-size:13px; text-align:center; margin-bottom:15px; color:var(--muted);"></p>
+  <a href="https://wa.me/6287777788565" target="_blank" class="cta-btn" id="conf-btn"></a>
+</div>
+
+<div class="footer">
+  © 2025 <span style="color:var(--neon)"><b>forexemas</b></span><br>
+  <span id="foot-note"></span>
+</div>
+
+</div>
+
+<a href="https://wa.me/6287777788565" target="_blank" class="wa-float" id="wa-float-text"></a>
+
+<script>
+const data = {
+  id: {
+    coreTitle: "🧠 PRINSIP UTAMA",
+    coreDesc: "Panel adalah <b>sistem izin (permission system)</b>, bukan sinyal entry. Jika panel tidak mengizinkan, maka tidak ada entry meskipun ada tanda BUY atau SELL.",
+    checkTitle: "📊 PEMETAAN PANEL",
+    sumMech: "Mechanical Checklist",
+    tMech: `<tr><th>Trend Alignment</th><td>W · D · Q Searah (UP: Buy Only, DOWN: Sell Only)</td></tr>
+            <tr><th>Filter Konsolidasi</th><td>Kuat (STOP ENTRY), Normal (Boleh Setup)</td></tr>
+            <tr><th>Kekuatan Panel</th><td>Strong (Agresif), Moderate (Normal), Weak (Skip)</td></tr>
+            <tr><th>Slope Direction</th><td>Wajib searah trend (Indikator Akselerasi)</td></tr>
+            <tr><th>Momentum Power</th><td>Body Candle min. 60% Power</td></tr>
+            <tr><th>Break Level</th><td>Break Weekly High (BUY) / Weekly Low (SELL)</td></tr>
+            <tr><th>Reversal Conflict</th><td>Adanya konflik = TUNGGU (No Entry)</td></tr>
+            <tr><th>ATH & Volatility</th><td>ATH 1.618 & H4 StdDev Expansion Zone</td></tr>`,
+    playTitle: "📖 STRATEGY PLAYBOOK",
+    sumPlayA: "Playbook A: Strict Trend Entry",
+    listPlayA: "<li><span class='dot ok'></span>Trend searah, Konsolidasi Normal, Power Strong/Mod</li><li><span class='dot ok'></span>Entry di close candle sinyal marker Strict</li><li><span class='dot ok'></span>SL di EMA Slow, TP Minimum 1:2</li>",
+    sumPlayB: "Playbook B: Medium Reversal Cont.",
+    listPlayB: "<li><span class='dot ok'></span>Pullback pada trend kuat minimal Moderate</li><li><span class='dot ok'></span>Slope kembali searah trend</li><li><span class='dot ok'></span>Manajemen: Lot 50-70% normal, TP 1R - 1.5R</li>",
+    lotTitle: "💰 MANAJEMEN LOT",
+    tLot: "<tr><th>Strong Power</th><td>100% Ukuran Lot Normal</td></tr><tr><th>Moderate Power</th><td>70% Ukuran Lot Normal</td></tr><tr><th>Weak Power</th><td>30-40% Ukuran Lot Normal</td></tr><tr><th>No Trend</th><td>0% (Tidak Entry)</td></tr>",
+    buyTitle: "🟢 BUY · STRICT",
+    buyList: "<li><span class='dot ok'></span>Trend UP & Power Strong/Mod</li><li><span class='dot ok'></span>Slope UP & Break Weekly High</li><li><span class='dot ok'></span>Momentum Body > 60% & No Conflict</li>",
+    sellTitle: "🔴 SELL · STRICT",
+    sellList: "<li><span class='dot bad'></span>Trend DOWN & Power Strong/Mod</li><li><span class='dot bad'></span>Slope DOWN & Break Weekly Low</li><li><span class='dot bad'></span>Momentum Body > 60% & No Conflict</li>",
+    finalTitle: "🎯 KEPUTUSAN AKHIR",
+    finalDesc: "Tidak melakukan entry adalah keputusan profesional.",
+    btnBuyText: "EXECUTE BUY",
+    btnSellText: "EXECUTE SELL",
+    btnWaitText: "STAY OUT / NO TRADE",
+    confTitle: "⚡ BUTUH KONFIRMASI?",
+    confDesc: "Jika setup tidak 100% yakin, lebih baik konfirmasi daripada salah entry.",
+    confBtn: "KONFIRMASI VIA WHATSAPP",
+    waFloatText: "ASK SETUP",
+    footNote: "Panel adalah otak, sinyal adalah tangan."
+  },
+  en: {
+    coreTitle: "🧠 CORE PRINCIPLE",
+    coreDesc: "Panel is a <b>permission system</b>, not an entry signal. No permission = no entry regardless of BUY/SELL markers.",
+    checkTitle: "📊 PANEL MAPPING",
+    sumMech: "Mechanical Checklist",
+    tMech: `<tr><th>Trend Alignment</th><td>W · D · Q Aligned (UP: Buy, DOWN: Sell)</td></tr>
+            <tr><th>Consolidation</th><td>Strong (STOP), Normal (Allowed)</td></tr>
+            <tr><th>Panel Strength</th><td>Strong, Moderate, Weak, No Trend</td></tr>
+            <tr><th>Slope Direction</th><td>Must align with trend (Acceleration)</td></tr>
+            <tr><th>Momentum Power</th><td>Body Candle min. 60% Power</td></tr>
+            <tr><th>Break Level</th><td>Break Weekly High (BUY) / Low (SELL)</td></tr>
+            <tr><th>Reversal Conflict</th><td>Conflict = WAIT (No Entry)</td></tr>
+            <tr><th>ATH & Volatility</th><td>ATH 1.618 & H4 StdDev Expansion Zone</td></tr>`,
+    playTitle: "📖 STRATEGY PLAYBOOK",
+    sumPlayA: "Playbook A: Strict Trend Entry",
+    listPlayA: "<li><span class='dot ok'></span>Aligned Trend, Normal Cons, Strong/Mod Power</li><li><span class='dot ok'></span>Entry at close of signal candle on Strict marker</li><li><span class='dot ok'></span>SL at EMA Slow, Min TP 1:2</li>",
+    sumPlayB: "Playbook B: Medium Reversal Cont.",
+    listPlayB: "<li><span class='dot ok'></span>Pullback in strong trend (min. Moderate)</li><li><span class='dot ok'></span>Slope returning to trend direction</li><li><span class='dot ok'></span>Management: 50-70% normal lot, TP 1R - 1.5R</li>",
+    lotTitle: "💰 LOT MANAGEMENT",
+    tLot: "<tr><th>Strong Power</th><td>100% Normal Lot Size</td></tr><tr><th>Moderate Power</th><td>70% Normal Lot Size</td></tr><tr><th>Weak Power</th><td>30-40% Normal Lot Size</td></tr><tr><th>No Trend</th><td>0% (Stay Out)</td></tr>",
+    buyTitle: "🟢 BUY · STRICT",
+    buyList: "<li><span class='dot ok'></span>Trend UP & Power Strong/Mod</li><li><span class='dot ok'></span>Slope UP & Break Weekly High</li><li><span class='dot ok'></span>Momentum Body > 60% & No Conflict</li>",
+    sellTitle: "🔴 SELL · STRICT",
+    sellList: "<li><span class='dot bad'></span>Trend DOWN & Power Strong/Mod</li><li><span class='dot bad'></span>Slope DOWN & Break Weekly Low</li><li><span class='dot bad'></span>Momentum Body > 60% & No Conflict</li>",
+    finalTitle: "🎯 FINAL DECISION",
+    finalDesc: "Not taking an entry is a professional decision.",
+    btnBuyText: "EXECUTE BUY",
+    btnSellText: "EXECUTE SELL",
+    btnWaitText: "STAY OUT / NO TRADE",
+    confTitle: "⚡ NEED CONFIRMATION?",
+    confDesc: "If the setup is not 100% convincing, better confirm than wrong entry.",
+    confBtn: "CONFIRM VIA WHATSAPP",
+    waFloatText: "ASK SETUP",
+    footNote: "Panel is the brain, signal is the hand."
+  }
+};
+
+function setLang(lang) {
+  document.getElementById('btn-id').classList.toggle('active', lang === 'id');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  const l = data[lang];
+  for (let key in l) {
+    const el = document.getElementById(key.replace(/[A-Z]/g, m => "-" + m.toLowerCase()));
+    if (el) el.innerHTML = l[key];
+  }
+}
+setLang('id');
+</script>
+</body>
+</html>
