@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3EMA Strict + ATH — Final Integrated Playbook</title>
+<title>3EMA Strict Blueprint V8.2 — Official Playbook</title>
 <style>
 :root{
   --bg:#05070b; --card:#0c1018; --line:#1a2030;
@@ -81,7 +81,7 @@ details summary { cursor: pointer; color: var(--neon); font-weight: 800; padding
 <div class="app">
 
 <div class="header">
-  <div class="logo">3EMA STRICT + PANEL</div>
+  <div class="logo">3EMA V8.2 BLUEPRINT</div>
   <div class="toggle">
     <button id="btn-id" onclick="setLang('id')" class="active">ID</button>
     <button id="btn-en" onclick="setLang('en')">EN</button>
@@ -143,7 +143,7 @@ details summary { cursor: pointer; color: var(--neon); font-weight: 800; padding
 </div>
 
 <div class="footer">
-  © 2025 <span style="color:var(--neon)"><b>forexemas</b></span><br>
+  © 2026 <span style="color:var(--neon)"><b>forexemas</b></span><br>
   <span id="foot-note"></span>
 </div>
 
@@ -154,74 +154,70 @@ details summary { cursor: pointer; color: var(--neon); font-weight: 800; padding
 <script>
 const data = {
   id: {
-    coreTitle: "🧠 PRINSIP UTAMA",
-    coreDesc: "Panel adalah <b>sistem izin (permission system)</b>, bukan sinyal entry. Jika panel tidak mengizinkan, maka tidak ada entry meskipun ada tanda BUY atau SELL.",
+    coreTitle: "🧠 FILOSOFI SISTEM V8.2",
+    coreDesc: "Indikator ini dirancang untuk <b>Clean Chart Execution</b>. Panel memberikan izin (Permission), garis horizontal memberikan target (Goal). Tanpa sinyal sampah, hanya data presisi.",
     checkTitle: "📊 PEMETAAN PANEL",
-    sumMech: "Mechanical Checklist",
-    tMech: `<tr><th>Trend Alignment</th><td>W · D · Q Searah (UP: Buy Only, DOWN: Sell Only)</td></tr>
-            <tr><th>Filter Konsolidasi</th><td>Kuat (STOP ENTRY), Normal (Boleh Setup)</td></tr>
-            <tr><th>Kekuatan Panel</th><td>Strong (Agresif), Moderate (Normal), Weak (Skip)</td></tr>
-            <tr><th>Slope Direction</th><td>Wajib searah trend (Indikator Akselerasi)</td></tr>
-            <tr><th>Momentum Power</th><td>Body Candle min. 60% Power</td></tr>
-            <tr><th>Break Level</th><td>Break Weekly High (BUY) / Weekly Low (SELL)</td></tr>
-            <tr><th>Reversal Conflict</th><td>Adanya konflik = TUNGGU (No Entry)</td></tr>
-            <tr><th>ATH & Volatility</th><td>ATH 1.618 & H4 StdDev Expansion Zone</td></tr>`,
+    sumMech: "Checklist Validasi Data",
+    tMech: `<tr><th>Strict MTF</th><td>W & D Wajib Searah (No Conflict)</td></tr>
+            <tr><th>Volatility Target</th><td>T1 (Solid) hingga T4 (Max) berbasis StdDev</td></tr>
+            <tr><th>Market Status</th><td>Trending (Boleh Entry), Consolidating (Wait)</td></tr>
+            <tr><th>Slope Action</th><td>EMA Fast/Mid/Slow Wajib Searah (Akselerasi)</td></tr>
+            <tr><th>Anchor Source</th><td>Wick Weekly/Daily sebagai acuan pantulan</td></tr>
+            <tr><th>Pivot SNR</th><td>Pantau level S/R dinamis untuk konfirmasi SL</td></tr>`,
     playTitle: "📖 STRATEGY PLAYBOOK",
-    sumPlayA: "Playbook A: Strict Trend Entry",
-    listPlayA: "<li><span class='dot ok'></span>Trend searah, Konsolidasi Normal, Power Strong/Mod</li><li><span class='dot ok'></span>Entry di close candle sinyal marker Strict</li><li><span class='dot ok'></span>SL di EMA Slow, TP Minimum 1:2</li>",
-    sumPlayB: "Playbook B: Medium Reversal Cont.",
-    listPlayB: "<li><span class='dot ok'></span>Pullback pada trend kuat minimal Moderate</li><li><span class='dot ok'></span>Slope kembali searah trend</li><li><span class='dot ok'></span>Manajemen: Lot 50-70% normal, TP 1R - 1.5R</li>",
+    sumPlayA: "Playbook A: MTF Strict Follower",
+    listPlayA: "<li><span class='dot ok'></span>Status Panel: Strong / Akselerasi</li><li><span class='dot ok'></span>Background Highlight muncul (Sinyal Tersembunyi)</li><li><span class='dot ok'></span>Entry di Close Candle, Target Minimal T1 Solid</li>",
+    sumPlayB: "Playbook B: Volatility Expansion",
+    listPlayB: "<li><span class='dot ok'></span>Hold posisi jika Trend Strength tetap 'Strong'</li><li><span class='dot ok'></span>Target bertahap ke T2, T3, hingga T4 (Dashed Lines)</li><li><span class='dot ok'></span>Exit jika muncul 'Reversal Alert' di Panel</li>",
     lotTitle: "💰 MANAJEMEN LOT",
-    tLot: "<tr><th>Strong Power</th><td>100% Ukuran Lot Normal</td></tr><tr><th>Moderate Power</th><td>70% Ukuran Lot Normal</td></tr><tr><th>Weak Power</th><td>30-40% Ukuran Lot Normal</td></tr><tr><th>No Trend</th><td>0% (Tidak Entry)</td></tr>",
-    buyTitle: "🟢 BUY · STRICT",
-    buyList: "<li><span class='dot ok'></span>Trend UP & Power Strong/Mod</li><li><span class='dot ok'></span>Slope UP & Break Weekly High</li><li><span class='dot ok'></span>Momentum Body > 60% & No Conflict</li>",
-    sellTitle: "🔴 SELL · STRICT",
-    sellList: "<li><span class='dot bad'></span>Trend DOWN & Power Strong/Mod</li><li><span class='dot bad'></span>Slope DOWN & Break Weekly Low</li><li><span class='dot bad'></span>Momentum Body > 60% & No Conflict</li>",
+    tLot: "<tr><th>Strong (Green)</th><td>100% Risk (High Conviction)</td></tr><tr><th>Moderate (Orange)</th><td>50-70% Risk Size</td></tr><tr><th>No Trend (Yellow)</th><td>0% (Market Berbahaya)</td></tr><tr><th>Reversal (Red)</th><td>Wait / Counter Trend Only</td></tr>",
+    buyTitle: "🟢 BUY CONDITION",
+    buyList: "<li><span class='dot ok'></span>MTF Trend: STRONG UP</li><li><span class='dot ok'></span>Harga di atas Weekly High (Anchor)</li><li><span class='dot ok'></span>Slope EMA Hijau > Oranye > Merah</li>",
+    sellTitle: "🔴 SELL CONDITION",
+    sellList: "<li><span class='dot bad'></span>MTF Trend: STRONG DOWN</li><li><span class='dot bad'></span>Harga di bawah Weekly Low (Anchor)</li><li><span class='dot bad'></span>Slope EMA Hijau < Oranye < Merah</li>",
     finalTitle: "🎯 KEPUTUSAN AKHIR",
-    finalDesc: "Tidak melakukan entry adalah keputusan profesional.",
+    finalDesc: "Disiplin pada Panel adalah kunci profit jangka panjang.",
     btnBuyText: "EXECUTE BUY",
     btnSellText: "EXECUTE SELL",
     btnWaitText: "STAY OUT / NO TRADE",
-    confTitle: "⚡ BUTUH KONFIRMASI?",
-    confDesc: "Jika setup tidak 100% yakin, lebih baik konfirmasi daripada salah entry.",
-    confBtn: "KONFIRMASI VIA WHATSAPP",
-    waFloatText: "ASK SETUP",
-    footNote: "Panel adalah otak, sinyal adalah tangan."
+    confTitle: "⚡ BUTUH ANALISA?",
+    confDesc: "Kirim screenshot chart Anda untuk konfirmasi setup 3EMA.",
+    confBtn: "WHATSAPP CONSULTATION",
+    waFloatText: "ANALISA SETUP",
+    footNote: "V8.2 Stability Fix: Fokus, Presisi, Konsisten."
   },
   en: {
-    coreTitle: "🧠 CORE PRINCIPLE",
-    coreDesc: "Panel is a <b>permission system</b>, not an entry signal. No permission = no entry regardless of BUY/SELL markers.",
+    coreTitle: "🧠 V8.2 SYSTEM PHILOSOPHY",
+    coreDesc: "This indicator is built for <b>Clean Chart Execution</b>. Panel gives permission, horizontal lines provide goals. No signal clutter, only precision data.",
     checkTitle: "📊 PANEL MAPPING",
-    sumMech: "Mechanical Checklist",
-    tMech: `<tr><th>Trend Alignment</th><td>W · D · Q Aligned (UP: Buy, DOWN: Sell)</td></tr>
-            <tr><th>Consolidation</th><td>Strong (STOP), Normal (Allowed)</td></tr>
-            <tr><th>Panel Strength</th><td>Strong, Moderate, Weak, No Trend</td></tr>
-            <tr><th>Slope Direction</th><td>Must align with trend (Acceleration)</td></tr>
-            <tr><th>Momentum Power</th><td>Body Candle min. 60% Power</td></tr>
-            <tr><th>Break Level</th><td>Break Weekly High (BUY) / Low (SELL)</td></tr>
-            <tr><th>Reversal Conflict</th><td>Conflict = WAIT (No Entry)</td></tr>
-            <tr><th>ATH & Volatility</th><td>ATH 1.618 & H4 StdDev Expansion Zone</td></tr>`,
+    sumMech: "Data Validation Checklist",
+    tMech: `<tr><th>Strict MTF</th><td>W & D Must Align (No Conflict)</td></tr>
+            <tr><th>Volatility Target</th><td>T1 (Solid) to T4 (Max) based on StdDev</td></tr>
+            <tr><th>Market Status</th><td>Trending (Trade), Consolidating (Wait)</td></tr>
+            <tr><th>Slope Action</th><td>EMA Fast/Mid/Slow Must Align (Acceleration)</td></tr>
+            <tr><th>Anchor Source</th><td>Weekly/Daily Wicks as bounce reference</td></tr>
+            <tr><th>Pivot SNR</th><td>Monitor dynamic S/R for SL confirmation</td></tr>`,
     playTitle: "📖 STRATEGY PLAYBOOK",
-    sumPlayA: "Playbook A: Strict Trend Entry",
-    listPlayA: "<li><span class='dot ok'></span>Aligned Trend, Normal Cons, Strong/Mod Power</li><li><span class='dot ok'></span>Entry at close of signal candle on Strict marker</li><li><span class='dot ok'></span>SL at EMA Slow, Min TP 1:2</li>",
-    sumPlayB: "Playbook B: Medium Reversal Cont.",
-    listPlayB: "<li><span class='dot ok'></span>Pullback in strong trend (min. Moderate)</li><li><span class='dot ok'></span>Slope returning to trend direction</li><li><span class='dot ok'></span>Management: 50-70% normal lot, TP 1R - 1.5R</li>",
+    sumPlayA: "Playbook A: MTF Strict Follower",
+    listPlayA: "<li><span class='dot ok'></span>Panel Status: Strong / Acceleration</li><li><span class='dot ok'></span>Background Highlight active (Hidden Signal)</li><li><span class='dot ok'></span>Entry at Close Candle, Min Target T1 Solid</li>",
+    sumPlayB: "Playbook B: Volatility Expansion",
+    listPlayB: "<li><span class='dot ok'></span>Hold if Trend Strength remains 'Strong'</li><li><span class='dot ok'></span>Trailing targets to T2, T3, and T4</li><li><span class='dot ok'></span>Exit if 'Reversal Alert' appears on Panel</li>",
     lotTitle: "💰 LOT MANAGEMENT",
-    tLot: "<tr><th>Strong Power</th><td>100% Normal Lot Size</td></tr><tr><th>Moderate Power</th><td>70% Normal Lot Size</td></tr><tr><th>Weak Power</th><td>30-40% Normal Lot Size</td></tr><tr><th>No Trend</th><td>0% (Stay Out)</td></tr>",
-    buyTitle: "🟢 BUY · STRICT",
-    buyList: "<li><span class='dot ok'></span>Trend UP & Power Strong/Mod</li><li><span class='dot ok'></span>Slope UP & Break Weekly High</li><li><span class='dot ok'></span>Momentum Body > 60% & No Conflict</li>",
-    sellTitle: "🔴 SELL · STRICT",
-    sellList: "<li><span class='dot bad'></span>Trend DOWN & Power Strong/Mod</li><li><span class='dot bad'></span>Slope DOWN & Break Weekly Low</li><li><span class='dot bad'></span>Momentum Body > 60% & No Conflict</li>",
+    tLot: "<tr><th>Strong (Green)</th><td>100% Risk (High Conviction)</td></tr><tr><th>Moderate (Orange)</th><td>50-70% Risk Size</td></tr><tr><th>No Trend (Yellow)</th><td>0% (Dangerous Market)</td></tr><tr><th>Reversal (Red)</th><td>Wait / Counter Trend Only</td></tr>",
+    buyTitle: "🟢 BUY CONDITION",
+    buyList: "<li><span class='dot ok'></span>MTF Trend: STRONG UP</li><li><span class='dot ok'></span>Price above Weekly High (Anchor)</li><li><span class='dot ok'></span>Slope EMA Green > Orange > Red</li>",
+    sellTitle: "🔴 SELL CONDITION",
+    sellList: "<li><span class='dot bad'></span>MTF Trend: STRONG DOWN</li><li><span class='dot bad'></span>Price below Weekly Low (Anchor)</li><li><span class='dot bad'></span>Slope EMA Green < Orange < Red</li>",
     finalTitle: "🎯 FINAL DECISION",
-    finalDesc: "Not taking an entry is a professional decision.",
+    finalDesc: "Discipline to the Panel is the key to long-term profit.",
     btnBuyText: "EXECUTE BUY",
     btnSellText: "EXECUTE SELL",
     btnWaitText: "STAY OUT / NO TRADE",
-    confTitle: "⚡ NEED CONFIRMATION?",
-    confDesc: "If the setup is not 100% convincing, better confirm than wrong entry.",
-    confBtn: "CONFIRM VIA WHATSAPP",
+    confTitle: "⚡ NEED ANALYSIS?",
+    confDesc: "Send your chart screenshot for 3EMA setup confirmation.",
+    confBtn: "WHATSAPP CONSULTATION",
     waFloatText: "ASK SETUP",
-    footNote: "Panel is the brain, signal is the hand."
+    footNote: "V8.2 Stability Fix: Focus, Precision, Consistency."
   }
 };
 
