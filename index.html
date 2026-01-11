@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3EMA Strict Blueprint V8.2 — Official Playbook</title>
+<title>3EMA Strict Blueprint V8.2 Plus — Official Playbook</title>
 <style>
 :root{
   --bg:#05070b; --card:#0c1018; --line:#1a2030;
   --green:#7CFF6B; --red:#FF6B6B; --gold:#FFD36B;
   --neon:#7cffd1; --text:#eaeaea; --muted:#8b95a7;
+  --aqua:#00d4ff;
 }
 *{box-sizing:border-box}
 body{
@@ -21,9 +22,13 @@ body{
 .header{text-align:center;margin-bottom:25px}
 .logo{
   font-size:24px; font-weight:900;
-  background:linear-gradient(90deg,#7cffd1,#6bc7ff,#ffd36b);
+  background:linear-gradient(90deg,#7cffd1,#00d4ff,#ffd36b);
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   text-shadow:0 0 20px rgba(124,255,209,0.3);
+}
+.badge-plus {
+  background: var(--aqua); color: #000; font-size: 10px; font-weight: 900;
+  padding: 2px 8px; border-radius: 4px; vertical-align: middle; margin-left: 5px;
 }
 .toggle{ display:flex; justify-content:center; gap:10px; margin-top:15px; }
 .toggle button{
@@ -45,6 +50,7 @@ body{
 .dot{ width:10px; height:10px; border-radius:50%; margin-top:4px; flex-shrink:0;}
 .ok{background: var(--green); box-shadow:0 0 15px var(--green);}
 .bad{background: var(--red); box-shadow:0 0 15px var(--red);}
+.wait{background: var(--gold); box-shadow:0 0 15px var(--gold);}
 
 .table-wrap{ overflow:hidden; border-radius:12px; border:1px solid #1f2636; margin-top:10px;}
 .table{ width:100%; border-collapse:collapse; font-size:12px; background: rgba(0,0,0,0.3);}
@@ -81,7 +87,7 @@ details summary { cursor: pointer; color: var(--neon); font-weight: 800; padding
 <div class="app">
 
 <div class="header">
-  <div class="logo">3EMA V8.2 BLUEPRINT</div>
+  <div class="logo">3EMA V8.2 <span class="badge-plus">PLUS</span></div>
   <div class="toggle">
     <button id="btn-id" onclick="setLang('id')" class="active">ID</button>
     <button id="btn-en" onclick="setLang('en')">EN</button>
@@ -154,70 +160,70 @@ details summary { cursor: pointer; color: var(--neon); font-weight: 800; padding
 <script>
 const data = {
   id: {
-    coreTitle: "🧠 FILOSOFI SISTEM V8.2",
-    coreDesc: "Indikator ini dirancang untuk <b>Clean Chart Execution</b>. Panel memberikan izin (Permission), garis horizontal memberikan target (Goal). Tanpa sinyal sampah, hanya data presisi.",
+    coreTitle: "🧠 FILOSOFI V8.2 PLUS",
+    coreDesc: "Sistem ini dirancang untuk <b>Clean Chart Execution</b>. Panel memberikan izin (Permission), Cloud memberikan konfirmasi Volatilitas, dan garis Target memberikan Goal. Tanpa label sampah.",
     checkTitle: "📊 PEMETAAN PANEL",
     sumMech: "Checklist Validasi Data",
     tMech: `<tr><th>Strict MTF</th><td>W & D Wajib Searah (No Conflict)</td></tr>
-            <tr><th>Volatility Target</th><td>T1 (Solid) hingga T4 (Max) berbasis StdDev</td></tr>
+            <tr><th>StdDev Cloud</th><td>Konfirmasi Ekspansi Volatilitas (Value Area)</td></tr>
             <tr><th>Market Status</th><td>Trending (Boleh Entry), Consolidating (Wait)</td></tr>
-            <tr><th>Slope Action</th><td>EMA Fast/Mid/Slow Wajib Searah (Akselerasi)</td></tr>
-            <tr><th>Anchor Source</th><td>Wick Weekly/Daily sebagai acuan pantulan</td></tr>
+            <tr><th>Anchor Price</th><td>Break Weekly/Daily Wick sebagai Base Entry</td></tr>
+            <tr><th>Volatility Target</th><td>T1 (Solid) hingga T4 (Max) berbasis StdDev</td></tr>
             <tr><th>Pivot SNR</th><td>Pantau level S/R dinamis untuk konfirmasi SL</td></tr>`,
     playTitle: "📖 STRATEGY PLAYBOOK",
-    sumPlayA: "Playbook A: MTF Strict Follower",
-    listPlayA: "<li><span class='dot ok'></span>Status Panel: Strong / Akselerasi</li><li><span class='dot ok'></span>Background Highlight muncul (Sinyal Tersembunyi)</li><li><span class='dot ok'></span>Entry di Close Candle, Target Minimal T1 Solid</li>",
+    sumPlayA: "Playbook A: Strict Trend Follower",
+    listPlayA: "<li><span class='dot ok'></span>Status Panel: Strong & Cloud Melebar</li><li><span class='dot ok'></span>Harga menembus Anchor Wick (H/L)</li><li><span class='dot ok'></span>Entry di Close Candle, Target Minimal T1 Solid</li>",
     sumPlayB: "Playbook B: Volatility Expansion",
-    listPlayB: "<li><span class='dot ok'></span>Hold posisi jika Trend Strength tetap 'Strong'</li><li><span class='dot ok'></span>Target bertahap ke T2, T3, hingga T4 (Dashed Lines)</li><li><span class='dot ok'></span>Exit jika muncul 'Reversal Alert' di Panel</li>",
+    listPlayB: "<li><span class='dot ok'></span>Hold posisi jika Cloud terus Ekspansi ke arah Trend</li><li><span class='dot ok'></span>Target bertahap ke T2, T3, hingga T4 (Dashed)</li><li><span class='dot wait'></span>Exit jika Cloud menyempit (Squeeze)</li>",
     lotTitle: "💰 MANAJEMEN LOT",
-    tLot: "<tr><th>Strong (Green)</th><td>100% Risk (High Conviction)</td></tr><tr><th>Moderate (Orange)</th><td>50-70% Risk Size</td></tr><tr><th>No Trend (Yellow)</th><td>0% (Market Berbahaya)</td></tr><tr><th>Reversal (Red)</th><td>Wait / Counter Trend Only</td></tr>",
+    tLot: "<tr><th>Strong Power</th><td>100% Ukuran Lot Normal</td></tr><tr><th>Moderate Power</th><td>70% Ukuran Lot Normal</td></tr><tr><th>Weak / Sideways</th><td>0% (Strictly No Trade)</td></tr>",
     buyTitle: "🟢 BUY CONDITION",
-    buyList: "<li><span class='dot ok'></span>MTF Trend: STRONG UP</li><li><span class='dot ok'></span>Harga di atas Weekly High (Anchor)</li><li><span class='dot ok'></span>Slope EMA Hijau > Oranye > Merah</li>",
+    buyList: "<li><span class='dot ok'></span>MTF Strong UP & Cloud Ekspansi ke Atas</li><li><span class='dot ok'></span>Harga > Weekly High Anchor Wick</li><li><span class='dot ok'></span>Background Hijau Muncul & No Reversal Conflict</li>",
     sellTitle: "🔴 SELL CONDITION",
-    sellList: "<li><span class='dot bad'></span>MTF Trend: STRONG DOWN</li><li><span class='dot bad'></span>Harga di bawah Weekly Low (Anchor)</li><li><span class='dot bad'></span>Slope EMA Hijau < Oranye < Merah</li>",
+    sellList: "<li><span class='dot bad'></span>MTF Strong DOWN & Cloud Ekspansi ke Bawah</li><li><span class='dot bad'></span>Harga < Weekly Low Anchor Wick</li><li><span class='dot bad'></span>Background Merah Muncul & No Reversal Conflict</li>",
     finalTitle: "🎯 KEPUTUSAN AKHIR",
-    finalDesc: "Disiplin pada Panel adalah kunci profit jangka panjang.",
+    finalDesc: "Disiplin pada izin Panel adalah kunci profit jangka panjang.",
     btnBuyText: "EXECUTE BUY",
     btnSellText: "EXECUTE SELL",
     btnWaitText: "STAY OUT / NO TRADE",
     confTitle: "⚡ BUTUH ANALISA?",
     confDesc: "Kirim screenshot chart Anda untuk konfirmasi setup 3EMA.",
-    confBtn: "WHATSAPP CONSULTATION",
+    confBtn: "KONSULTASI VIA WHATSAPP",
     waFloatText: "ANALISA SETUP",
-    footNote: "V8.2 Stability Fix: Fokus, Presisi, Konsisten."
+    footNote: "V8.2 Stability Plus: Fokus, Presisi, Konsisten."
   },
   en: {
-    coreTitle: "🧠 V8.2 SYSTEM PHILOSOPHY",
-    coreDesc: "This indicator is built for <b>Clean Chart Execution</b>. Panel gives permission, horizontal lines provide goals. No signal clutter, only precision data.",
+    coreTitle: "🧠 V8.2 PLUS PHILOSOPHY",
+    coreDesc: "Built for <b>Clean Chart Execution</b>. Panel gives Permission, Cloud confirms Volatility, and Target lines define Goals. Zero visual noise, pure data.",
     checkTitle: "📊 PANEL MAPPING",
     sumMech: "Data Validation Checklist",
     tMech: `<tr><th>Strict MTF</th><td>W & D Must Align (No Conflict)</td></tr>
-            <tr><th>Volatility Target</th><td>T1 (Solid) to T4 (Max) based on StdDev</td></tr>
+            <tr><th>StdDev Cloud</th><td>Volatility Expansion Confirmation (Value Area)</td></tr>
             <tr><th>Market Status</th><td>Trending (Trade), Consolidating (Wait)</td></tr>
-            <tr><th>Slope Action</th><td>EMA Fast/Mid/Slow Must Align (Acceleration)</td></tr>
-            <tr><th>Anchor Source</th><td>Weekly/Daily Wicks as bounce reference</td></tr>
+            <tr><th>Anchor Price</th><td>Break Weekly/Daily Wick as Base Entry</td></tr>
+            <tr><th>Volatility Target</th><td>T1 (Solid) to T4 (Max) based on StdDev</td></tr>
             <tr><th>Pivot SNR</th><td>Monitor dynamic S/R for SL confirmation</td></tr>`,
     playTitle: "📖 STRATEGY PLAYBOOK",
-    sumPlayA: "Playbook A: MTF Strict Follower",
-    listPlayA: "<li><span class='dot ok'></span>Panel Status: Strong / Acceleration</li><li><span class='dot ok'></span>Background Highlight active (Hidden Signal)</li><li><span class='dot ok'></span>Entry at Close Candle, Min Target T1 Solid</li>",
+    sumPlayA: "Playbook A: Strict Trend Follower",
+    listPlayA: "<li><span class='dot ok'></span>Panel Status: Strong & Cloud Expanding</li><li><span class='dot ok'></span>Price breaks Anchor Wick (H/L)</li><li><span class='dot ok'></span>Entry at Close Candle, Min Target T1 Solid</li>",
     sumPlayB: "Playbook B: Volatility Expansion",
-    listPlayB: "<li><span class='dot ok'></span>Hold if Trend Strength remains 'Strong'</li><li><span class='dot ok'></span>Trailing targets to T2, T3, and T4</li><li><span class='dot ok'></span>Exit if 'Reversal Alert' appears on Panel</li>",
+    listPlayB: "<li><span class='dot ok'></span>Hold position if Cloud continues expanding in Trend direction</li><li><span class='dot ok'></span>Trailing targets to T2, T3, and T4 (Dashed)</li><li><span class='dot wait'></span>Exit if Cloud narrows (Squeeze)</li>",
     lotTitle: "💰 LOT MANAGEMENT",
-    tLot: "<tr><th>Strong (Green)</th><td>100% Risk (High Conviction)</td></tr><tr><th>Moderate (Orange)</th><td>50-70% Risk Size</td></tr><tr><th>No Trend (Yellow)</th><td>0% (Dangerous Market)</td></tr><tr><th>Reversal (Red)</th><td>Wait / Counter Trend Only</td></tr>",
+    tLot: "<tr><th>Strong Power</th><td>100% Normal Lot Size</td></tr><tr><th>Moderate Power</th><td>70% Normal Lot Size</td></tr><tr><th>Weak / Sideways</th><td>0% (Strictly No Trade)</td></tr>",
     buyTitle: "🟢 BUY CONDITION",
-    buyList: "<li><span class='dot ok'></span>MTF Trend: STRONG UP</li><li><span class='dot ok'></span>Price above Weekly High (Anchor)</li><li><span class='dot ok'></span>Slope EMA Green > Orange > Red</li>",
+    buyList: "<li><span class='dot ok'></span>MTF Strong UP & Cloud Expanding Upward</li><li><span class='dot ok'></span>Price > Weekly High Anchor Wick</li><li><span class='dot ok'></span>Green Background Active & No Conflict</li>",
     sellTitle: "🔴 SELL CONDITION",
-    sellList: "<li><span class='dot bad'></span>MTF Trend: STRONG DOWN</li><li><span class='dot bad'></span>Price below Weekly Low (Anchor)</li><li><span class='dot bad'></span>Slope EMA Green < Orange < Red</li>",
+    sellList: "<li><span class='dot bad'></span>MTF Strong DOWN & Cloud Expanding Downward</li><li><span class='dot bad'></span>Price < Weekly Low Anchor Wick</li><li><span class='dot bad'></span>Red Background Active & No Conflict</li>",
     finalTitle: "🎯 FINAL DECISION",
-    finalDesc: "Discipline to the Panel is the key to long-term profit.",
+    finalDesc: "Discipline to Panel permission is the key to consistency.",
     btnBuyText: "EXECUTE BUY",
     btnSellText: "EXECUTE SELL",
     btnWaitText: "STAY OUT / NO TRADE",
     confTitle: "⚡ NEED ANALYSIS?",
     confDesc: "Send your chart screenshot for 3EMA setup confirmation.",
-    confBtn: "WHATSAPP CONSULTATION",
+    confBtn: "CONSULT VIA WHATSAPP",
     waFloatText: "ASK SETUP",
-    footNote: "V8.2 Stability Fix: Focus, Precision, Consistency."
+    footNote: "V8.2 Stability Plus: Focus, Precision, Consistency."
   }
 };
 
@@ -234,4 +240,3 @@ setLang('id');
 </script>
 </body>
 </html>
-
